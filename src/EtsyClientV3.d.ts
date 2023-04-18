@@ -51,5 +51,7 @@ declare module 'node-etsy-client' {
    getOptions(options: EtsyClientOptions): EtsyClientOptions;
 
    getSellerTaxonomyNodes(): Promise<string | object>;
+
+   getPropertiesByTaxonomyId(taxonomyId: number): Promise<string | object>;
   }
 }

@@ -120,6 +120,10 @@ class EtsyClientV3 {
     return this.limitedEtsyApiFetch('/seller-taxonomy/nodes', {})
   }
 
+  getPropertiesByTaxonomyId(taxonomyId) {
+    return this.limitedEtsyApiFetch(`seller-taxonomy/nodes/${taxonomyId}/properties`)
+  }
+
   //~ oauth2 required under
 
   // https://developers.etsy.com/documentation/reference/#operation/getListingsByShop
