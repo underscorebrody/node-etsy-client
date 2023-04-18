@@ -49,5 +49,7 @@ declare module 'node-etsy-client' {
    getListingProduct(listingId: number, productId: number, options?: object): Promise<string | object>;
 
    getOptions(options: EtsyClientOptions): EtsyClientOptions;
+
+   getSellerTaxonomyNodes(): Promise<string | object>;
   }
 }
