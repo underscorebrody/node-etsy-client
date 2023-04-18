@@ -116,6 +116,10 @@ class EtsyClientV3 {
      return this.limitedEtsyApiFetch(`/shops/${this.shopId}/listings/${listingId}/properties`, options);
   }
 
+  getSellerTaxonomyNodes() {
+    return this.limitedEtsyApiFetch('/seller-taxonomy/nodes', {})
+  }
+
   //~ oauth2 required under
 
   // https://developers.etsy.com/documentation/reference/#operation/getListingsByShop
