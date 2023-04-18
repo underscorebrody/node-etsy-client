@@ -121,7 +121,7 @@ class EtsyClientV3 {
   }
 
   getPropertiesByTaxonomyId(taxonomyId) {
-    return this.limitedEtsyApiFetch(`seller-taxonomy/nodes/${taxonomyId}/properties`)
+    return this.limitedEtsyApiFetch(`/seller-taxonomy/nodes/${taxonomyId}/properties`)
   }
 
   //~ oauth2 required under
