@@ -103,6 +103,12 @@ class EtsyClientV3 {
      return this.limitedEtsyApiFetch(`/listings/${listingId}/images`, options);
   }
 
+  // https://developers.etsy.com/documentation/reference/#operation/getListingVideos
+  getListingVideos(listingId, options) {
+    this._assumeField('listingId', listingId);
+    return this.limitedEtsyApiFetch(`/listings/${listingId}/videos`, options);
+  }
+
   // https://developers.etsy.com/documentation/reference/#operation/getListingProperty
   getListingProperty(listingId, options) {
      this._assumeField('listingId', listingId);

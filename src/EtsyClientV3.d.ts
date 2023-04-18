@@ -38,6 +38,8 @@ declare module 'node-etsy-client' {
  
    getListingImages(listingId: number, options?: object): Promise<string | object>;
 
+   getListingVideos(listingId: number, options?: object): Promise<string | object>;
+
    getListingProperty(listingId: number, options?: object): Promise<string | object>;
 
    getListingsByShop(options?: EtsyClientOptions): Promise<string | object>;
