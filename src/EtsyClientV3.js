@@ -202,7 +202,7 @@ class EtsyClientV3 {
            const getQueryString = queryString.stringify(queryOptions);
            requestEndpoint += `?${getQueryString}`
          }
-         EtsyClientV3.debug && console.log(`request ${requestEndpoint} headers: ${headers}`);
+         EtsyClientV3.debug && console.log(`request ${requestEndpoint} headers: ${JSON.stringify(headers)}`);
          client.nodeAxios(requestEndpoint, headers, method, queryOptions)
            .then(response => EtsyClientV3._response(response, resolve, reject))
            .catch(requestError => {
