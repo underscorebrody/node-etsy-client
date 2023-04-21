@@ -1,3 +1,4 @@
+import queryString from 'query-string';
 import axios from "axios";
 import SusiRali from 'susi-rali';
 
@@ -197,9 +198,12 @@ class EtsyClientV3 {
          delete queryOptions.accessToken
          
          let requestEndpoint = `${client.apiUrl}${endpoint}`;
-         const requestParams = new URLSearchParams(queryOptions);
-         EtsyClientV3.debug && console.log(`request ${requestEndpoint} params: ${requestParams} headers: ${JSON.stringify(headers)}`);
-         client.nodeAxios(requestEndpoint, headers, method, requestParams)
+         if (method === 'get') {
+           const getQueryString = queryString.stringify(queryOptions);
+           requestEndpoint += `?${getQueryString}`
+         }
+         EtsyClientV3.debug && console.log(`request ${requestEndpoint} headers: ${JSON.stringify(headers)}`);
+         client.nodeAxios(requestEndpoint, headers, method, queryOptions)
            .then(response => EtsyClientV3._response(response, resolve, reject))
            .catch(requestError => {
              EtsyClientV3.debug && console.log(`request err ${JSON.stringify(requestError)}`);
