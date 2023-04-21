@@ -180,7 +180,7 @@ class EtsyClientV3 {
     }
   }
 
-  safeEtsyApiFetch(endpoint, options, method="get", data=null) {
+  safeEtsyApiFetch(endpoint, options, method="get", data={}) {
      this._assumeField('endpoint', endpoint);
      var client = this;
      return new Promise((resolve, reject) => {
@@ -193,7 +193,7 @@ class EtsyClientV3 {
            headers['Authorization'] = `Bearer ${enrichedOptions.accessToken}`; // Scoped endpoints require a bearer token
          }
          
-         const queryOptions = Object.assign({}, enrichedOptions);
+         const queryOptions = Object.assign(data, enrichedOptions);
          delete queryOptions.apiKey;
          delete queryOptions.accessToken
          
