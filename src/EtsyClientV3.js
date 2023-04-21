@@ -191,9 +191,6 @@ class EtsyClientV3 {
          if (enrichedOptions.accessToken) {
            headers['Authorization'] = `Bearer ${enrichedOptions.accessToken}`; // Scoped endpoints require a bearer token
          }
-         if (method !== 'get') {
-           headers['content-type'] = 'application/x-www-form-urlencoded';
-         }
          
          const queryOptions = Object.assign(data, enrichedOptions);
          delete queryOptions.apiKey;
