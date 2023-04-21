@@ -124,6 +124,7 @@ class EtsyClientV3 {
     return this.limitedEtsyApiFetch(`/seller-taxonomy/nodes/${taxonomyId}/properties`)
   }
 
+
   //~ oauth2 required under
 
   // https://developers.etsy.com/documentation/reference/#operation/getListingsByShop
@@ -146,6 +147,13 @@ class EtsyClientV3 {
      this._assumeField('productId', productId);
      this._assumeOAuth2();
      return this.limitedEtsyApiFetch(`/listings/${listingId}/inventory/products/${productId}`, options);
+  }
+
+  updateListing(listingId, attributes, options) {
+    this._assumeField('listingId', listingId);
+    this._assumeShopId();
+    this._assumeOAuth2();
+    return this.safeEtsyApiFetch(`/shops/${this.shopId}/listings/${listingId}`, options, 'patch', attributes);
   }
 
   /*
@@ -172,7 +180,7 @@ class EtsyClientV3 {
     }
   }
 
-  safeEtsyApiFetch(endpoint, options) {
+  safeEtsyApiFetch(endpoint, options, method="get", data=null) {
      this._assumeField('endpoint', endpoint);
      var client = this;
      return new Promise((resolve, reject) => {
@@ -184,13 +192,18 @@ class EtsyClientV3 {
          if (enrichedOptions.accessToken) {
            headers['Authorization'] = `Bearer ${enrichedOptions.accessToken}`; // Scoped endpoints require a bearer token
          }
+         
          const queryOptions = Object.assign({}, enrichedOptions);
          delete queryOptions.apiKey;
          delete queryOptions.accessToken
-         const getQueryString = queryString.stringify(queryOptions);
-         const requestEndpoint = `${client.apiUrl}${endpoint}?${getQueryString}`;
+         
+         const requestEndpoint = `${client.apiUrl}${endpoint}`;
+         if (method === 'get') {
+           const getQueryString = queryString.stringify(queryOptions);
+           requestEndpoint += `?${getQueryString}`
+         }
          EtsyClientV3.debug && console.log(`request ${requestEndpoint} headers: **hidden**`);
-         client.nodeAxios(requestEndpoint, headers)
+         client.nodeAxios(requestEndpoint, headers, method, queryOptions)
            .then(response => EtsyClientV3._response(response, resolve, reject))
            .catch(requestError => {
              EtsyClientV3.debug && console.log(`request err ${JSON.stringify(requestError)}`);
@@ -201,6 +214,7 @@ class EtsyClientV3 {
            });
      });
   }
+
 
   secureErrorAttribute(secureError, sourceError, attribute) {
     if (!Object.keys(sourceError).includes(attribute)) {
@@ -241,7 +255,7 @@ class EtsyClientV3 {
     return Promise.resolve(response);
   }
 
-  nodeAxios(endpoint, headers=[]) {
+  nodeAxios(endpoint, headers=[], method="get", data) {
     const client = this;
     if (EtsyClientV3.debug) {
       console.log(">>>", endpoint);
@@ -250,7 +264,11 @@ class EtsyClientV3 {
     if (this.dryMode) {
       return this.dryFetch(endpoint);
     }
-    return client._axios.get(endpoint, { headers });
+    if (method === "get") {
+      return client._axios.get(endpoint, { headers });
+    } else {
+      return client._axios({method, url: endpoint, data})
+    }
   }
 
   getNbCall() {

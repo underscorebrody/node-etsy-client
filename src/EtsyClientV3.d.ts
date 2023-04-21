@@ -53,5 +53,7 @@ declare module 'node-etsy-client' {
    getSellerTaxonomyNodes(): Promise<string | object>;
 
    getPropertiesByTaxonomyId(taxonomyId: number): Promise<string | object>;
+
+   updateListing(listingId: number, attributes: object, options: object): Promise<string | object>.
   }
 }
