@@ -197,7 +197,7 @@ class EtsyClientV3 {
          delete queryOptions.apiKey;
          delete queryOptions.accessToken
          
-         const requestEndpoint = `${client.apiUrl}${endpoint}`;
+         let requestEndpoint = `${client.apiUrl}${endpoint}`;
          if (method === 'get') {
            const getQueryString = queryString.stringify(queryOptions);
            requestEndpoint += `?${getQueryString}`
