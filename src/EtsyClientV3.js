@@ -254,7 +254,7 @@ class EtsyClientV3 {
     return Promise.resolve(response);
   }
 
-  nodeAxios(endpoint, headers=[], method="get", data) {
+  nodeAxios(endpoint, headers=[], method="get", params) {
     const client = this;
     if (EtsyClientV3.debug) {
       console.log(">>>", endpoint);
@@ -266,7 +266,7 @@ class EtsyClientV3 {
     if (method === "get") {
       return client._axios.get(endpoint, { headers });
     } else {
-      return client._axios({method, url: endpoint, data})
+      return client._axios({method, url: endpoint, params})
     }
   }
 
