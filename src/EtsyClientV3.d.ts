@@ -31,6 +31,18 @@ declare module 'node-etsy-client' {
      sort_on: object;
      sort_order: object;
    }>): Promise<string | object>;
+
+    findAllListingsActive(options?: Partial<{
+      limit: number;
+      offset: number;
+      keywords: string;
+      sort_on: object;
+      sort_order: object;
+      min_price: number;
+      max_price: number;
+      taxonomy_id: number;
+      shop_location: string;
+    }>): Promise<string | object>;
  
    getListing(listingId: number, options?: object): Promise<string | object>;
  

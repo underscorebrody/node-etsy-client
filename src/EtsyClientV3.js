@@ -77,6 +77,10 @@ class EtsyClientV3 {
      this._assumeShopId();
      return this.limitedEtsyApiFetch(`/shops/${this.shopId}/listings/active`, options);
   }
+  // https://developer.etsy.com/documentation/reference/#operation/findAllListingsActive
+  findAllListingsActive(options) {
+    return this.limitedEtsyApiFetch(`/listings/active`, options);
+  }
   // https://github.com/etsy/open-api/issues/377
   findAllActiveListingsByShopHack(options) {
      this._assumeShopId();
